@@ -44,23 +44,22 @@ public class WordleTip {
                     .toList(); // список букв где все верны  - [t+, a+, b+, l+, e+]
 
 
-
             //переводим весь оставшийся словарь в таблицу, где ключ это слово, а значение это список
             // где '-' это не совпадающая буква с маской currentGuess, а '+' совпадающая
-            Map<String,  char[]> wordMap = new TreeMap<>();
+            Map<String, char[]> wordMap = new TreeMap<>();
 
             //вычисляем символьное значение каждого слова и добавляем в таблицу
-            for (String word : tipDictionary){
+            for (String word : tipDictionary) {
                 List<Character> charWord = word.chars()
                         .mapToObj(c -> (char) c)
                         .toList();//список букв
 
-                char [] charWordSymb = new char[5];
+                char[] charWordSymb = new char[5];
                 Arrays.fill(charWordSymb, '-');//список символов
 
                 //отмечаем в списке символов +;
                 for (int i = 0; i < charWord.size(); i++) {
-                    if (charWord.get(i) == answerChList.get(i)){
+                    if (charWord.get(i) == answerChList.get(i)) {
                         charWordSymb[i] = '+';
                     }
                 }
@@ -72,9 +71,9 @@ public class WordleTip {
             // используем для этого currentGuess, который является комбинацией всех
             // отгаданных букв пользователя
 
-            for (Map.Entry<String, char[]> entry : wordMap.entrySet()){
+            for (Map.Entry<String, char[]> entry : wordMap.entrySet()) {
                 for (int i = 0; i < currentGuess.length; i++) {
-                    if (currentGuess[i] != entry.getValue()[i]){
+                    if (currentGuess[i] != entry.getValue()[i]) {
                         //удаляем все слова которые не имеют общих + с currentGuess
                         tipDictionary.remove(entry.getKey());
                     }
@@ -84,7 +83,7 @@ public class WordleTip {
         }
 
         //вывод tip
-        String tip = tipDictionary.get(random.nextInt(tipDictionary.size()-1));
+        String tip = tipDictionary.get(random.nextInt(tipDictionary.size() - 1));
         System.out.println("Вот вам подсказка, это слово не загадано - " + tip);
 
         //добавить tip в game.getTipsList()(использованные подсказки)

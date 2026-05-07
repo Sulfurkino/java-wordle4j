@@ -24,7 +24,7 @@ public class WordleDictionary {
         return words.get(random.nextInt(words.size()));
     }
 
-    public boolean contains(String word){
+    public boolean contains(String word) {
         return words.contains(word);
     }
 

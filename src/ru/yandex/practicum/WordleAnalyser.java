@@ -21,7 +21,7 @@ public class WordleAnalyser {
         boolean[] answerUsed = new boolean[5];
 
         for (int i = 0; i < 5; i++) {
-            if (guessCh[i] == answerCh[i]){
+            if (guessCh[i] == answerCh[i]) {
                 result[i] = '+';
                 guessUsed[i] = true;
                 answerUsed[i] = true;
@@ -34,16 +34,16 @@ public class WordleAnalyser {
         // [ , , , true, ]
         // [ , , , true, ]
         for (int i = 0; i < 5; i++) {
-          if (answerUsed[i]){
-              continue;
-          }
+            if (answerUsed[i]) {
+                continue;
+            }
             for (int j = 0; j < 5; j++) {
-               if (answerCh[i] == guessCh[j]){
-                   result[j] = '^';
-                   answerUsed[i] = true;
-                   guessUsed[j] = true;
-                   break;
-               }
+                if (answerCh[i] == guessCh[j]) {
+                    result[j] = '^';
+                    answerUsed[i] = true;
+                    guessUsed[j] = true;
+                    break;
+                }
             }
         }
 
@@ -51,7 +51,7 @@ public class WordleAnalyser {
         wordleGame.setGuess(new String(result));
 
         //проверяем пройдена ли игра
-        if (wordleGame.getGuess().replace("+", "").isEmpty()){
+        if (wordleGame.getGuess().replace("+", "").isEmpty()) {
             wordleGame.setSolved(true);
         }
 

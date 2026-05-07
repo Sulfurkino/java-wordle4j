@@ -47,7 +47,7 @@ public class Wordle {
             System.out.println("Осталось " + (6 - game.getSteps()) + "попыток.");
             // tip
 
-            if (input == null){
+            if (input == null) {
                 wordleTip.tip(game, dictionary);
             }
 
@@ -63,7 +63,7 @@ public class Wordle {
                 //new game
                 game = new WordleGame(dictionary, dictionary.getRandomWord(), wordleLogger);
             }
-            if (game.isSolved()){
+            if (game.isSolved()) {
                 System.out.println("Поздравляем, вы победили! Угаданное слово - " + game.getAnswer());
                 wordleLogger.info("Игра завершена победой :)");
 

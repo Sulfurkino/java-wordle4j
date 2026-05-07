@@ -64,6 +64,7 @@ public class WordleGame {
     public void setGuess(String guess) {
         this.guess = guess;
     }
+
     public String getAnswer() {
         return answer;
     }
