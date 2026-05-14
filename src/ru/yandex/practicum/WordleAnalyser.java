@@ -50,11 +50,6 @@ public class WordleAnalyser {
         //set current guess in wordlegame
         wordleGame.setGuess(new String(result));
 
-        //проверяем пройдена ли игра
-        if (wordleGame.getGuess().replace("+", "").isEmpty()) {
-            wordleGame.setSolved(true);
-        }
-
         return new String(result);
     }
 }

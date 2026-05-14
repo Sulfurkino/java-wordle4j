@@ -25,7 +25,7 @@ public class WordleTip {
 
         //получаем guess string
         char[] currentGuess = game.getGuessMask();
-        String guessString = currentGuess.toString();
+        String guessString = new String(currentGuess);
         //[+,-,-,-,+] - маска currentGuess
 
 
@@ -83,11 +83,12 @@ public class WordleTip {
         }
 
         //вывод tip
-        String tip = tipDictionary.get(random.nextInt(tipDictionary.size() - 1));
-        System.out.println("Вот вам подсказка, это слово не загадано - " + tip);
+        if (tipDictionary.isEmpty()) {
+            throw new IllegalStateException("Tip dictionary is empty");
+        }
 
-        //добавить tip в game.getTipsList()(использованные подсказки)
-        game.getTipsList().add(tip);
+        String tip = tipDictionary.get(random.nextInt(tipDictionary.size()));
+        System.out.println("Вот вам подсказка, это слово не загадано - " + tip);
     }
 
 }
