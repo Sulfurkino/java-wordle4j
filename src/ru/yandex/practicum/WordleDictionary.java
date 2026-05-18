@@ -9,7 +9,9 @@ import java.util.Random;
     также этот класс может содержать рутинные функции.
  */
 public class WordleDictionary {
+
     private List<String> words;
+    private final Random random = new Random();
 
     public WordleDictionary(List<String> words) {
         this.words = words;
@@ -20,13 +22,11 @@ public class WordleDictionary {
     }
 
     public String getRandomWord() {
-        Random random = new Random();
         return words.get(random.nextInt(words.size()));
     }
 
     public boolean contains(String word) {
         return words.contains(word);
     }
-
 
 }

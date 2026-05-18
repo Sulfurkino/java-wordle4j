@@ -1,11 +1,11 @@
 package ru.yandex.practicum;
 
+import ru.yandex.practicum.exception.LoadException;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class WordleDictionaryLoader {
 
             return new WordleDictionary(words);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new LoadException("Ошибка загрузки файла");
         }
     }
 }

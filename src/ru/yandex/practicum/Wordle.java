@@ -1,5 +1,7 @@
 package ru.yandex.practicum;
 
+import ru.yandex.practicum.exception.LoadException;
+
 import java.util.Scanner;
 
 import static ru.yandex.practicum.WordleDictionaryLoader.load;
@@ -35,7 +37,7 @@ public class Wordle {
 
                 System.out.print("Введите слово (exit - выход, enter для подсказки): ");
 
-                String input = scanner.nextLine();
+                String input = scanner.nextLine().toLowerCase().replaceAll("ё", "е");
 
                 //выход
                 if (input.equalsIgnoreCase("exit")) {
@@ -57,6 +59,14 @@ public class Wordle {
                 if (input.length() != WordleAnalyser.WORD_LENGTH) {
 
                     System.out.println("Размер слова должен быть 5 букв.");
+
+                    continue;
+                }
+
+                //проверка
+                if(dictionary.contains(input)){
+
+                    System.out.println("К сожалению программа не знает этого слова, попробуйте другое.");
 
                     continue;
                 }

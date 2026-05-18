@@ -10,7 +10,16 @@ import java.time.format.DateTimeFormatter;
 
 
 public class WordleLogger {
+
     private final Path logFile = Paths.get("logs/app.log");
+
+    public WordleLogger() {
+        try {
+            Files.createDirectories(logFile.getParent());
+        } catch (IOException e){
+
+        }
+    }
 
     private void log(String level, String message) {
         String timestamp = LocalDateTime.now().format(

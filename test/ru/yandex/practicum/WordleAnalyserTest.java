@@ -15,6 +15,15 @@ public class WordleAnalyserTest {
     }
 
     @Test
+
+    void shouldReturnAllNoMatches(){
+
+        String result = WordleAnalyser.analyse("","");
+
+        assertEquals("-----", result);
+    }
+
+    @Test
     void shouldReturnNoMatches() {
 
         String result = WordleAnalyser.analyse("домик", "карта");
