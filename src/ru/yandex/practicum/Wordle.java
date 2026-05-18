@@ -9,67 +9,103 @@ import static ru.yandex.practicum.WordleDictionaryLoader.load;
     -создать лог-файл (он должен передаваться во все классы)
     -создать загрузчик словарей WordleDictionaryLoader
     -загрузить словарь WordleDictionary с помощью класса WordleDictionaryLoader
-    затем создать игру WordleGame и передать ей словарь
+    затем создать игру GameState и передать ей словарь
     вызвать игровой метод в котором в цикле опрашивать пользователя и передавать информацию в игру
     вывести состояние игры и конечный результат
  */
+
 public class Wordle {
 
     public static void main(String[] args) {
+
         try {
+
             WordleLogger wordleLogger = new WordleLogger();
             wordleLogger.info("Запуск приложения");
 
             WordleTip wordleTip = new WordleTip();
-            WordleAnalyser analyser = new WordleAnalyser();
+
             Scanner scanner = new Scanner(System.in);
+
             WordleDictionary dictionary = load("words_ru.txt");
 
-            WordleGame game = new WordleGame(dictionary, dictionary.getRandomWord(), wordleLogger);
+            GameState game = new GameState(dictionary.getRandomWord(), wordleLogger);
 
             while (true) {
+
                 System.out.print("Введите слово (exit - выход, enter для подсказки): ");
+
                 String input = scanner.nextLine();
 
-                //валидация длины слова
-                if (input.length() != 5) {
-                    System.out.println("Размер слова должен быть 5 букв, введите слово еще раз - ");
-                    continue;
-                }
-
+                //выход
                 if (input.equalsIgnoreCase("exit")) {
+
                     wordleLogger.info("Пользователь вышел из игры");
+
                     break;
                 }
 
-                //move
-                System.out.println(analyser.analyseWord(input, game.getAnswer(), game));
+                //подсказка
+                if (input.isBlank()) {
 
-
-
-
-//                System.out.println("Осталось " + (6 - game.getSteps()) + "попыток.");
-                // tip
-
-                if (input.isEmpty()) {
                     wordleTip.tip(game, dictionary);
+
+                    continue;
                 }
 
+                //проверка длины
+                if (input.length() != WordleAnalyser.WORD_LENGTH) {
 
-                //end
+                    System.out.println("Размер слова должен быть 5 букв.");
 
-                //end win
-                //new game
-                //end lose
-                //new game
+                    continue;
+                }
+
+                //анализ
+                String analyseResult = WordleAnalyser.analyse(input, game.getAnswer());
+
+                //регистрация попытки
+                boolean registered = game.guessRegistration(input, analyseResult);
+
+                if (!registered) {
+
+                    System.out.println("Игра уже завершена.");
+
+                    break;
+                }
+
+                //вывод результата анализа
+                System.out.println(analyseResult);
+
+                //ставшиеся попытки
+                System.out.printf("Осталось %d попыток.%n", GameState.MAX_STEPS - game.getSteps());
+
+                //победа
+                if (game.isSolved()) {
+
+                    System.out.println("Поздравляем, вы победили!");
+
+                    break;
+                }
+
+                //поражение
+                if (game.getSteps() >= GameState.MAX_STEPS) {
+
+                    System.out.println("Игра окончена! Вы проиграли.");
+
+                    System.out.println("Ответ: " + game.getAnswer());
+
+                    break;
+                }
             }
 
             scanner.close();
+
             wordleLogger.info("Работа приложения завершена");
 
-        } catch (LoadException loadException){
+        } catch (LoadException loadException) {
+
             System.out.println("Файл не загружен, пожалуйста загрузите файл");
         }
-
     }
 }

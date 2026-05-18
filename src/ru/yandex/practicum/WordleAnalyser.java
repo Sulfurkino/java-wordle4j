@@ -4,51 +4,59 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-//класс для анализа слов
-
-
 public class WordleAnalyser {
-    public static String analyseWord(String guess, String answer, WordleGame wordleGame) {
+
+    public static final int WORD_LENGTH = 5;
+
+    public static final char EXACT = '+';
+    public static final char PRESENT = '^';
+    public static final char ABSENT = '-';
+
+    public static String analyse(String guess, String answer) {
+
         char[] guessCh = guess.toCharArray();
         char[] answerCh = answer.toCharArray();
 
-        char[] result = new char[5];
-        // all [-] by default
-        Arrays.fill(result, '-');
+        char[] result = new char[WORD_LENGTH];
+        Arrays.fill(result, ABSENT);
 
-        boolean[] guessUsed = new boolean[5];
-        boolean[] answerUsed = new boolean[5];
+        boolean[] guessUsed = new boolean[WORD_LENGTH];
+        boolean[] answerUsed = new boolean[WORD_LENGTH];
 
-        for (int i = 0; i < 5; i++) {
+
+        for (int i = 0; i < WORD_LENGTH; i++) {
+
             if (guessCh[i] == answerCh[i]) {
-                result[i] = '+';
+                result[i] = EXACT;
+
                 guessUsed[i] = true;
                 answerUsed[i] = true;
-                //добавляем угаданную букву в трафарет, который используем в Tip
-                wordleGame.getGuessMask()[i] = '+';
             }
         }
-        // answer - table, guess - worla;
-        // [ , ^ , , +, ]
-        // [ , , , true, ]
-        // [ , , , true, ]
-        for (int i = 0; i < 5; i++) {
+
+        for (int i = 0; i < WORD_LENGTH; i++) {
+
             if (answerUsed[i]) {
                 continue;
             }
-            for (int j = 0; j < 5; j++) {
+
+            for (int j = 0; j < WORD_LENGTH; j++) {
+
+                if (guessUsed[j]) {
+                    continue;
+                }
+
                 if (answerCh[i] == guessCh[j]) {
-                    result[j] = '^';
+
+                    result[j] = PRESENT;
+
                     answerUsed[i] = true;
                     guessUsed[j] = true;
+
                     break;
                 }
             }
         }
-
-        //set current guess in wordlegame
-        wordleGame.setGuess(new String(result));
 
         return new String(result);
     }
