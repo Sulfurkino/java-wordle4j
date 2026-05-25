@@ -6,15 +6,6 @@ import java.util.Scanner;
 
 import static ru.yandex.practicum.WordleDictionaryLoader.load;
 
-/*
-в главном классе нам нужно:
-    -создать лог-файл (он должен передаваться во все классы)
-    -создать загрузчик словарей WordleDictionaryLoader
-    -загрузить словарь WordleDictionary с помощью класса WordleDictionaryLoader
-    затем создать игру GameState и передать ей словарь
-    вызвать игровой метод в котором в цикле опрашивать пользователя и передавать информацию в игру
-    вывести состояние игры и конечный результат
- */
 
 public class Wordle {
 
@@ -37,10 +28,10 @@ public class Wordle {
 
                 System.out.print("Введите слово (exit - выход, enter для подсказки): ");
 
-                String input = scanner.nextLine().toLowerCase().replaceAll("ё", "е");
+                String input = Utils.normaliseWord(scanner.nextLine());
 
                 //выход
-                if (input.equalsIgnoreCase("exit")) {
+                if (input.equals("exit")) {
 
                     wordleLogger.info("Пользователь вышел из игры");
 
@@ -64,7 +55,7 @@ public class Wordle {
                 }
 
                 //проверка
-                if(dictionary.contains(input)){
+                if (!dictionary.contains(input)) {
 
                     System.out.println("К сожалению программа не знает этого слова, попробуйте другое.");
 

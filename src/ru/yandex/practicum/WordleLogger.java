@@ -1,5 +1,7 @@
 package ru.yandex.practicum;
 
+import ru.yandex.practicum.exception.InvalidDirectory;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,8 +18,8 @@ public class WordleLogger {
     public WordleLogger() {
         try {
             Files.createDirectories(logFile.getParent());
-        } catch (IOException e){
-
+        } catch (IOException e) {
+            throw new InvalidDirectory("Директория для логов не создана.");
         }
     }
 
@@ -40,7 +42,4 @@ public class WordleLogger {
         log("INFO", message);
     }
 
-    public void error(String message) {
-        log("ERROR", message);
-    }
 }

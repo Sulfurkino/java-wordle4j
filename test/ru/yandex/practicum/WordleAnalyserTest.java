@@ -15,10 +15,9 @@ public class WordleAnalyserTest {
     }
 
     @Test
+    void shouldReturnAllNoMatches() {
 
-    void shouldReturnAllNoMatches(){
-
-        String result = WordleAnalyser.analyse("","");
+        String result = WordleAnalyser.analyse("домик", "труба");
 
         assertEquals("-----", result);
     }
